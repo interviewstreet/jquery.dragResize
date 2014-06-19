@@ -1,0 +1,74 @@
+<html>
+  <head>
+    <script src="bower_components/jquery/jquery.js"></script>
+    <script src="jquery.dragResize.js"></script>
+    <style>
+      body {
+      font-family: verdana;
+      padding: 0px;
+      border: 0px;
+      margin: 0px;
+      }
+      .sidebar {
+      text-align: center;
+      background: #eee;
+      }
+
+      .sidebar-label {
+      padding-top: 10%;
+      }
+
+      #wrapper > div {
+      float: left;
+      }
+
+      .separator {
+      width: 3%;
+      background: #aaa;
+      cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id='wrapper'>
+      <div class="left-sidebar sidebar">
+        <p class="sidebar-label">Left Sidebar</p>
+      </div>
+      <div class="separator"></div>
+      <div class="right-sidebar sidebar">
+        <p class="sidebar-label">Right Sidebar</p>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </body>
+  <script>
+    $(document).ready(function () {
+      $('#wrapper > div').
+        height($(window).height());
+
+      $('#wrapper > div.sidebar').
+        width('48%');
+
+      $left_sidebar = $('.left-sidebar');
+      $right_sidebar = $('.right-sidebar');
+
+      that = self;
+      $('div.separator').dragResize({
+        activeColor: "#AAA",
+        inactiveColor: "#DDD",
+        resize: function(pageX, pageY) {
+          var document_width, left_sidebar_width, left_sidebar_width_px, right_sidebar_width, right_sidebar_width_px, separator_width;
+          separator_width = $('div.separator').width();
+          document_width = $("#wrapper").width();
+          left_sidebar_width_px = pageX - ($('div.separator').width() / 2);
+          right_sidebar_width_px = document_width - (left_sidebar_width_px + $('div.separator').width() + 10);
+          left_sidebar_width = (100 * (left_sidebar_width_px / document_width)) + "%";
+          right_sidebar_width = (100 * (right_sidebar_width_px / document_width)) + "%";
+          that.$left_sidebar.css('width', left_sidebar_width);
+          return that.$right_sidebar.css('width', right_sidebar_width);
+        }
+      });
+
+    });
+  </script>
+</html>
