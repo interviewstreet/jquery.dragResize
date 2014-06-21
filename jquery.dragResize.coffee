@@ -20,7 +20,7 @@
       enable_resize = true
       return false
 
-    $(@).mouseup (e) ->
+    $(document).mouseup (e) ->
       enable_resize = false
 
     $(@).mouseenter (e) ->
