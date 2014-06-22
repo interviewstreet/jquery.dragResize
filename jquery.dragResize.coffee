@@ -36,11 +36,11 @@
     min_width=50
     $(window).mousemove (e) ->
       if enable_resize == true
-        if e.pageY < 0 or e.pageY > document.height or e.pageX < min_width or e.pageX > ($(document).width()-min_width)
+        if e.pageY < 0 or e.pageY > document.height or e.pageX < min_width or e.pageX > ($(window).width()-min_width)
           if e.pageX < min_width
             return options.resize(min_width, e.pageY)
-          else if e.pageX > $(document).width()-min_width
-            return options.resize($(document).width()-min_width, e.pageY)
+          else if e.pageX > $(window).width()-min_width
+            return options.resize($(window).width()-min_width, e.pageY)
           enable_resize = false
         options.resize(e.pageX, e.pageY)
 ) $
