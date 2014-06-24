@@ -11,6 +11,9 @@
       resize: (pageX, pageY) ->
       activeColor: "#AAA"
       inactiveColor: "#DDD"
+      default_min_width: 50
+      left_min_width: -1
+      right_min_width: -1
     }
     that = @
     options = $.extend(default_options, options)
@@ -35,15 +38,18 @@
     
     parent_pos=$(@).parent().position()
     parent_pos=parent_pos.left
-    min_width=50
+    if options.left_min_width is -1
+    	options.left_min_width=options.default_min_width
+    if options.right_min_width is -1
+    	options.right_min_width=options.default_min_width
     parent_width=$(@).parent().width()
     $(window).mousemove (e) -> 
       if enable_resize == true
-        if e.pageY < 0 or e.pageY > document.height or e.pageX < (parent_pos + min_width) or e.pageX > (parent_width+parent_pos-min_width)
-          if e.pageX < (parent_pos + min_width)
-            return options.resize(min_width, e.pageY)
-          else if e.pageX > (parent_width+parent_pos-min_width)
-            return options.resize(parent_width-min_width, pageY)
+        if e.pageY < 0 or e.pageY > document.height or e.pageX < (parent_pos + options.left_min_width) or e.pageX > (parent_width+parent_pos-options.right_min_width)
+          if e.pageX < (parent_pos + options.left_min_width)
+            return options.resize(options.left_min_width, e.pageY)
+          else if e.pageX > (parent_width+parent_pos-options.right_min_width)
+            return options.resize(parent_width-options.right_min_width, e.pageY)
           enable_resize = false
         options.resize(e.pageX-parent_pos, e.pageY)
 ) $
