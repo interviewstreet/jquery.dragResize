@@ -32,15 +32,18 @@
     $(window).mouseout (e) ->
       if e.relatedTarget == null
         enable_resize = false
-
+    
+    parent_pos=$(@).parent().position()
+    parent_pos=parent_pos.left
     min_width=50
-    $(window).mousemove (e) ->
+    parent_width=$(@).parent().width()
+    $(window).mousemove (e) -> 
       if enable_resize == true
-        if e.pageY < 0 or e.pageY > document.height or e.pageX < min_width or e.pageX > ($(window).width()-min_width)
-          if e.pageX < min_width
+        if e.pageY < 0 or e.pageY > document.height or e.pageX < (parent_pos + min_width) or e.pageX > (parent_width+parent_pos-min_width)
+          if e.pageX < (parent_pos + min_width)
             return options.resize(min_width, e.pageY)
-          else if e.pageX > $(window).width()-min_width
-            return options.resize($(window).width()-min_width, e.pageY)
+          else if e.pageX > (parent_width+parent_pos-min_width)
+            return options.resize(parent_width-min_width, pageY)
           enable_resize = false
-        options.resize(e.pageX, e.pageY)
+        options.resize(e.pageX-parent_pos, e.pageY)
 ) $
