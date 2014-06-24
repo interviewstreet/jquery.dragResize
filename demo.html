@@ -59,6 +59,9 @@
       $('div.separator').dragResize({
         activeColor: "#AAA",
         inactiveColor: "#DDD",
+        right_min_width: 200,
+        left_min_width: 100,
+        //default_min_width: 300,
         resize: function(pageX, pageY) {
           var document_width, left_sidebar_width, left_sidebar_width_px, right_sidebar_width, right_sidebar_width_px, separator_width;
           separator_width = $('div.separator').width();
